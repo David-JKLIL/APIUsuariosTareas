@@ -8,7 +8,7 @@
         public string Contrasena { get; set; }
 
         //Esto esto es la relacion con tareas - Un usuario puede tener muchas tareas
-        public List<Tarea>? Tareas { get; set; }
+        public List<Tarea> Tareas { get; set; }
 
     }
 }

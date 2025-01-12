@@ -1,4 +1,6 @@
-﻿using APIUsuariosTareas.Models;
+﻿using APIUsuariosTareas.DTOs;
+using APIUsuariosTareas.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +18,9 @@ namespace APIUsuariosTareas.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearUsuario([FromBody] CrearUsuarioRequest request)
+        [Route("RegistrarUsuario")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RegistrarUsuario([FromBody] CrearUsuarioDTO request)
         {
             // Verificar si el correo ya existe
             var usuarioExistente = await _context.Usuarios
@@ -42,14 +46,9 @@ namespace APIUsuariosTareas.Controllers
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return Ok(new { Message = "Usuario creado exitosamente" });
+            //return Ok(new { Message = "Usuario creado exitosamente" });
+            return CreatedAtAction(nameof(RegistrarUsuario), new { id = usuario.Id }, usuario);
         }
 
-        public class CrearUsuarioRequest
-        {
-            public string Nombre { get; set; }
-            public string Correo { get; set; }
-            public string Contrasena { get; set; }
-        }
     }
 }

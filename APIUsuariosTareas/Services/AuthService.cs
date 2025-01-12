@@ -30,10 +30,11 @@ namespace APIUsuariosTareas.Services
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+                new Claim("id", usuario.Id.ToString()),
                 new Claim(ClaimTypes.Name, usuario.Nombre),
                 new Claim(ClaimTypes.Email, usuario.correo)
             };
+
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -50,6 +51,6 @@ namespace APIUsuariosTareas.Services
 
         }
 
-        
+
     }
 }

@@ -21,6 +21,12 @@ namespace APIUsuariosTareas.Controllers
             try
             {
                 var token = await _authService.AuthenticateAsync(request.Correo, request.Contrasena);
+
+                if (token == null)
+                {
+                    return Unauthorized(new { Message = "Credenciales inválidas" });
+                }
+
                 return Ok(new { token });
             }
             catch
@@ -31,8 +37,8 @@ namespace APIUsuariosTareas.Controllers
 
         public class LoginRequest
         {
-            public string Correo { get; set; }
-            public string Contrasena { get; set; }
+            public string? Correo { get; set; }
+            public string? Contrasena { get; set; }
         }
     }
 }
